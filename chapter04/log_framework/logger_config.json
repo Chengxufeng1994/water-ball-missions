@@ -1,0 +1,40 @@
+{
+  "loggers": {
+    "levelThreshold": "DEBUG",
+    "exporter": {
+      "type": "console"
+    },
+    "layout": "standard",
+    "children": {
+      "app.game": {
+        "levelThreshold": "INFO",
+        "exporter": {
+          "type": "composite",
+          "children": [
+            {
+              "type": "console"
+            },
+            {
+              "type": "composite",
+              "children": [
+                {
+                  "type": "file",
+                  "fileName": "game.log"
+                },
+                {
+                  "type": "file",
+                  "fileName": "game.backup.log"
+                }
+              ]
+            }
+          ]
+        },
+        "children": {
+          "app.game.ai": {
+            "levelThreshold": "TRACE"
+          }
+        }
+      }
+    }
+  }
+}
