@@ -7,6 +7,7 @@ type Logger interface {
 	Warn(msg string)
 	Error(msg string)
 
+	GetName() string
 	GetLevel() Level
 	GetLayout() Layout
 	GetExporter() Exporter
