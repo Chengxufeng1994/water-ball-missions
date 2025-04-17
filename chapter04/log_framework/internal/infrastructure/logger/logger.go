@@ -46,6 +46,10 @@ func New(parent pkg.Logger, name string, level pkg.Level, layout pkg.Layout, exp
 	}
 }
 
+func (l *Logger) GetName() string {
+	return l.Name
+}
+
 func (l *Logger) GetLevel() pkg.Level {
 	return l.Level
 }
