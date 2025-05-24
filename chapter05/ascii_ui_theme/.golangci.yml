@@ -1,0 +1,97 @@
+version: "2"
+
+# options for analysis running
+run:
+  timeout: 5m
+  issues-exit-code: 1
+  tests: true
+  modules-download-mode: readonly
+  build-tags: # Conditional analysis
+    - integration
+  allow-parallel-runners: false
+  allow-serial-runners: false
+  concurrency: 4
+
+linters:
+  default: "standard"
+  enable:
+    # Error handling
+    - errcheck
+    - errorlint
+
+    # Static analysis
+    - staticcheck
+    - govet
+
+    # Complexity
+    - gocyclo
+    - gocritic
+
+    # Security
+    - gosec
+
+    # Performance
+    - prealloc
+
+    # Unused code
+    - unused
+    - ineffassign
+
+    # Documentation
+    - godox
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
+
+issues:
+  # Maximum issues count per one linter.
+  # Set to 0 to disable.
+  # Default: 50
+  max-issues-per-linter: 0
+  # Maximum count of issues with the same text.
+  # Set to 0 to disable.
+  # Default: 3
+  max-same-issues: 0
+  # Make issues output unique by line.
+  # Default: true
+  uniq-by-line: true
+  # Show only new issues: if there are unstaged changes or untracked files,
+  # only those changes are analyzed, else only changes in HEAD~ are analyzed.
+  # It's a super-useful option for integration of golangci-lint into existing large codebase.
+  # It's not practical to fix all existing issues at the moment of integration:
+  # much better don't allow issues in new code.
+  #
+  # Default: false
+  new: false
+  # Show only new issues created after the best common ancestor (merge-base against HEAD).
+  # Default: ""
+  # new-from-merge-base: main
+  # Show only new issues created after git revision `REV`.
+  # Default: ""
+  # new-from-rev: REV
+  # Show only new issues created in git patch with set file path.
+  # Default: ""
+  # new-from-patch: path/to/patch/file
+  # Show issues in any part of update files (requires new-from-rev or new-from-patch).
+  # Default: false
+  whole-files: false
+  # Fix found issues (if it's supported by the linter).
+  # Default: false
+  fix: false
+
+output:
+  # print lines of code with issue, default is true
+  path-mode: "abs"
+  # Default: ["linter", "file"]
+  sort-order:
+    - linter
+    - severity
+    - file # filepath, line, and column.
+  # Show statistics per linter.
+  # Default: true
+  show-stats: true
