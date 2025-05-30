@@ -9,17 +9,17 @@ import (
 )
 
 type Screen struct {
-	ScreenSize   *ScreenSize
-	CurrentTheme *theme.AsciiTheme
+	ScreenSize *ScreenSize
+	factory    theme.ASCIIThemeFactory
 }
 
 func NewScreen(
 	screenSize *ScreenSize,
-	theme *theme.AsciiTheme,
+	factory theme.ASCIIThemeFactory,
 ) *Screen {
 	return &Screen{
-		ScreenSize:   screenSize,
-		CurrentTheme: theme,
+		ScreenSize: screenSize,
+		factory:    factory,
 	}
 }
 
@@ -31,8 +31,8 @@ func (ui *Screen) SetScreenSize(screenSize *ScreenSize) {
 	ui.ScreenSize = screenSize
 }
 
-func (ui *Screen) SetAsciiTheme(theme *theme.AsciiTheme) {
-	ui.CurrentTheme = theme
+func (ui *Screen) SetAsciiThemeFactory(factory theme.ASCIIThemeFactory) {
+	ui.factory = factory
 }
 
 func (s Screen) Render() {
@@ -54,21 +54,21 @@ func (s Screen) Render() {
 	}
 
 	// 渲染元件（這邊假設每個元件已改為接受 [][]string 並考慮寬度）
-	s.CurrentTheme.ButtonFactory.CreateButton(
+	s.factory.CreateButton(
 		"Hi, I miss u", button.NewPadding(0, 0, 1, 1), core.NewPosition(3, 1)).
 		Render(canvas)
 
-	s.CurrentTheme.ButtonFactory.CreateButton(
+	s.factory.CreateButton(
 		"No", button.NewPadding(0, 0, 1, 1), core.NewPosition(3, 6)).
 		Render(canvas)
 
-	s.CurrentTheme.ButtonFactory.CreateButton(
+	s.factory.CreateButton(
 		"Yes", button.NewPadding(0, 0, 1, 1), core.NewPosition(12, 6)).
 		Render(canvas)
-	s.CurrentTheme.TextFactory.CreateText(
+	s.factory.CreateText(
 		[]string{"Do u love me ?", "Please tell..."}, core.NewPosition(4, 4)).
 		Render(canvas)
-	s.CurrentTheme.NumberListFactory.CreateNumberList(
+	s.factory.CreateNumberList(
 		[]string{"Let's Travel", "Back to home", "Have dinner"}, core.NewPosition(3, 9)).
 		Render(canvas)
 

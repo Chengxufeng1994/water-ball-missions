@@ -14,5 +14,6 @@ func NewBasicTextFactory() *BasicTextFactory {
 }
 
 func (b *BasicTextFactory) CreateText(value []string, position *core.Position) text.Text {
-	return NewBasicText(value, position)
+	baseText := text.NewBaseText(value, position)
+	return NewBasicText(baseText)
 }
